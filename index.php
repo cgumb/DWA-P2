@@ -6,9 +6,18 @@
   </head>
   <body>
     <?php
-      $words = array("foo", "bar", "hello", "world", "these", "are",
-                      "some", "words", "to", "use");
+      error_reporting(E_ALL);       # Report Errors, Warnings, and Notices
+      ini_set('display_errors', 1); # Display errors on page (instead of a log file)
+    ?>
+    <?php
+      $word_source = './ozymandias.txt';
       $default_num_words = 4;
+
+      $words = strtolower(file_get_contents($word_source)); # Lowercase str
+      $words = preg_replace('/[^\w\s]/', '', $words);       # No punctuation
+      $words = preg_split('/\s+/', $words);                 # Make it an array
+      $words = array_unique($words);                        # No duplicates
+      
 
       function pw_gen($num_words, $words) {
         #bad input
