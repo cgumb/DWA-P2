@@ -6,10 +6,7 @@
     <link rel='stylesheet' type='text/css' href='css/style.css' />
   </head>
   <body>
-    <?php
-      error_reporting(E_ALL);       # Report Errors, Warnings, and Notices
-      ini_set('display_errors', 1); # Display errors on page (instead of a log file)
-    ?>
+
     <?php require 'pw_gen.php'; ?>
 
     <pre class="password">
@@ -22,6 +19,7 @@
         }
       ?>
     </pre>
+    
     <form method="POST" action="index.php" >
       <strong>Number of Words (1-9):</strong>
       <br />
