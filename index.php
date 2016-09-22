@@ -3,56 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <title>Password Generator</title>
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
   </head>
   <body>
     <?php
       error_reporting(E_ALL);       # Report Errors, Warnings, and Notices
       ini_set('display_errors', 1); # Display errors on page (instead of a log file)
     ?>
-    <?php
-      $word_source = './ozymandias.txt';
-      $default_num_words = 4;
+    <?php require 'pw_gen.php'; ?>
 
-      $words = strtolower(file_get_contents($word_source)); # Lowercase str
-      $words = preg_replace('/[^\w\s]/', '', $words);       # No punctuation
-      $words = preg_split('/\s+/', $words);                 # Make it an array
-      $words = array_unique($words);                        # No duplicates
-      
-
-      function pw_gen($num_words, $words) {
-        #bad input
-        if ( is_numeric($num_words) == False ) {
-          return 'It\'s gotta be a number, silly!';
-        }
-        if ($num_words > 9 or $num_words == 0) {
-          return 'Your password must be between 1 and 9 words in length!';
-        }
-
-        if ($num_words == 1){
-          return $words[array_rand($words)];
-        }
-
-        foreach ( array_rand( $words, $num_words ) as $key ) {
-          $selections[] = $words[$key];
-        }
-        $pw = implode('-', $selections);
-        return $pw;
-      }
-    ?>
-    <pre>
+    <pre class="password">
       <?php
         if ( isset($_POST['num_words']) ) {
-          echo pw_gen($_POST['num_words'], $words);
+          echo pw_gen($_POST['num_words'], $_POST['delim'], $words);
         }
         else {
-          echo pw_gen($default_num_words, $words);
+          echo pw_gen($default_num_words, $default_delim, $words);
         }
       ?>
     </pre>
     <form method="POST" action="index.php" >
-      Number of Words:
-      <input type="text" name="num_words">
-      <input type="submit" value="generate">
+      <strong>Number of Words (1-9):</strong>
+      <br />
+      <input type="text" name="num_words" size="1" maxlength="1">
+      <br />
+      <strong>Separate Words By:</strong>
+      <br />
+      <input type="radio" name="delim" value="-" checked="checked">hyphen (-)
+      <input type="radio" name="delim" value="_">underscore (_)
+      <input type="radio" name="delim" value=".">period (.)
+      <br />
+      <input type="submit" value="generate password">
   </form>
   </body>
 </html>

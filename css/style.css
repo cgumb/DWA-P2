@@ -1,0 +1,17 @@
+body {
+    background-color: #e5aaa5;
+    text-align: center;
+}
+
+.password {
+  width: auto;
+  padding: 1em;
+  background-color: #A14E47;
+  color: #FFF0EF;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+}
